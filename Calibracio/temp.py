@@ -17,21 +17,20 @@ chan = AnalogIn(ads, ADS.P0)
 #Create a Document to write data
 f=open("Temperatures","w")
 
-f.write("Time Temp Voltage")
+f.write("Time Temp Voltage \n")
 ads.gain=2
 
-#int(time.asctime().split()[2])
-dia0=int(time.asctime().split()[3].split(":")[1])
-dia=0
+
+dia0=int(time.asctime().split()[2])
 
 while True:
-    if dia0>dia:
-        t=time.asctime()
-        #dia=int(t.split([2]))
-        dia=int(t.split()[3].split(":")[1])
-        T=ads.value()
-        V=ads.voltage()
-        f.write(t+str(T)+str(V)+"\n")
+    t=time.asctime()
+    dia=int(t.split([2]))
+    
+    if dia==dia0:
+        T=chan.value
+        V=chan.voltage
+        f.write(t+" "+str(T)+" "+str(V)+"\n")
         time.sleep(5)
     else:
         break
