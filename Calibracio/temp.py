@@ -3,6 +3,7 @@ import board
 import busio
 import adafruit_ads1x15.ads1015 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
+import math
 
 
 # Create the I2C bus
@@ -17,20 +18,25 @@ chan = AnalogIn(ads, ADS.P0)
 #Create a Document to write data
 f=open("Temperatures","w")
 
-f.write("Time Temp Voltage \n")
+f.write("Temp Voltage \n")
 ads.gain=2
+R1=10000
+A=0.001129148
+B=0.000234125
+C=0.0000000876741
 
-
-dia0=int(time.asctime().split()[2])
-
-while True:
-    t=time.asctime()
-    dia=int(t.split([2]))
+def temp(v,r,A,B,C):
+    Rntc=r*v/(3.3-v)
+    logRntc=math.log10(Rntc)
+    Tk=1/(A+B*logRntc+C*logRntc*logRntc
+    TC=Tk-273.15
+    return(TC)
     
-    if dia==dia0:
-        T=chan.value
-        V=chan.voltage
-        f.write(t+" "+str(T)+" "+str(V)+"\n")
-        time.sleep(5)
-    else:
-        break
+n=1
+while n<10:
+    #T=chan.value
+    V=chan.voltage
+    Tc=temp(V,R1,A,B,C)
+    f.write(+str(Tc)+" "+str(V)+"\n")
+    time.sleep(5)
+    n=n+1
