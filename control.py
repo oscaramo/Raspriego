@@ -33,7 +33,7 @@ m=0
 
 #Bucle infinit
 while True:
-    if h<1:    #Nombre d'hores que volem prendre dades
+    if h<19:    #Nombre d'hores que volem prendre dades
        #Escriure les dades al fitxer 
        hum,temp=Adafruit_DHT.read_retry(sensor,DHT11_pin)
        V=chan.voltage
@@ -41,7 +41,7 @@ while True:
        f.write(str(temp)+"    "+str(hum)+"    "+str(v)+"\n")
        #Prendre dades cada t minuts
        t=5
-       time.sleep(1*t)
+       time.sleep(60*t)
        m=m+t
        if m>=60:
            m=0
