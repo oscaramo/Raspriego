@@ -21,7 +21,6 @@ def add_v(df,T,H,L):
     df=df.append(df2)
     return df
 
-
 #Config GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -53,11 +52,11 @@ while True:
         hum,temp=Adafruit_DHT.read_retry(sensor,DHT11_pin)
         V=chan.voltage
         V=float(str(V)[0:4])
-        df=add_v(df,temp,hum,v)
+        df=add_v(df,temp,hum,V)
 
         #Condicions de reg (de moment amb fotoresistor,
         #per a poder veure que funciona)
-        if V>=1:#
+        if V>=1.0:
             GPIO.output(7,True)
             time.sleep(10)
         else:
@@ -74,4 +73,5 @@ while True:
         df_m=add_v(df_m,T,H,L)
         #df=pd.DataFrame(data)
         #df.to_csv()
+        #df_m.to_csv()
         break
