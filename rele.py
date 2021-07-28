@@ -11,8 +11,8 @@ n=0
 
 while n<10:
     n=n+1
-    time.sleep(1)
+    time.sleep(5)
     GPIO.output(3,True)
-    time.sleep(1)
+    time.sleep(5)
     GPIO.output(3,False)
     
